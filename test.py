@@ -36,7 +36,9 @@ def predict_img(net, full_img, gpu=False):
     y_r = F.sigmoid(net(X_r))
     y_l = F.upsample_bilinear(y_l, scale_factor=2).data[0][0].cpu().numpy()
     y_r = F.upsample_bilinear(y_r, scale_factor=2).data[0][0].cpu().numpy()
-
+    
+    print(y_l[0].shape)
+    
     y = merge_masks(y_l, y_r, full_img.size[0])
     yy = dense_crf(np.array(full_img).astype(np.uint8), y)
 
